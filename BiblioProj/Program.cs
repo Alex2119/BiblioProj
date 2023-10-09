@@ -25,6 +25,11 @@ builder.Services.AddDbContext<BiblioProjContext>(options =>
     options.EnableSensitiveDataLogging(); // Pour afficher les données sensibles dans les requêtes
 });
 
+builder.Services.AddCors(options =>
+    options.AddPolicy("AllowAnyOrigin", builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    }) );
 
 var app = builder.Build();
 
@@ -34,6 +39,7 @@ if(app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowAnyOrigin");
 
 app.UseHttpsRedirection();
 
